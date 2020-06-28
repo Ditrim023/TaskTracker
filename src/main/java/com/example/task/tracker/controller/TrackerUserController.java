@@ -40,13 +40,29 @@ public class TrackerUserController {
     @PostMapping("/registration")
     public ResponseEntity createUser(@RequestBody NewTrackerUserDto trackerUserDto) {
         trackerUserService.createTrackerUser(trackerUserDto);
-        return ResponseEntity.ok("User Created");
+        return ResponseEntity.ok("User created");
+    }
+
+    @PatchMapping("/user/{id}")
+    public ResponseEntity userUpdate(@PathVariable Long id, @RequestBody NewTrackerUserDto trackerUserDto) {
+        trackerUserService.updateTrackerUser(id, trackerUserDto);
+        return ResponseEntity.ok("User updated");
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity deleteUserById(@PathVariable Long id){
+        trackerUserService.deleteTrackerUser(id);
+        return ResponseEntity.ok("User deleted");
     }
 
     @GetMapping("/user/{username}")
     public TrackerUserDto getUser(@PathVariable String username) {
-        TrackerUser user = trackerUserService.findByUsername(username);
-        return trackerConverter.convertEntityToDto(user);
+        try {
+            TrackerUser user = trackerUserService.findByUsername(username);
+            return trackerConverter.convertEntityToDto(user);
+        } catch (NullPointerException e) {
+            return new TrackerUserDto();
+        }
     }
 
     @PostMapping("login")

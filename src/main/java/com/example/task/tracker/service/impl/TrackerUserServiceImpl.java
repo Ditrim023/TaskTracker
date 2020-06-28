@@ -33,6 +33,22 @@ public class TrackerUserServiceImpl implements TrackerUserService {
     }
 
     @Override
+    public void updateTrackerUser(Long id, NewTrackerUserDto trackerUserDto) {
+        TrackerUser user = trackerUserRepository.getOne(1L);
+        user.setUsername(trackerUserDto.getUsername());
+        user.setFirstName(trackerUserDto.getFirstName());
+        user.setLastName(trackerUserDto.getLastName());
+        user.setEmail(trackerUserDto.getEmail());
+        user.setPassword(new BCryptPasswordEncoder(10).encode(trackerUserDto.getPassword()));
+        trackerUserRepository.save(user);
+    }
+
+    @Override
+    public void deleteTrackerUser(Long id) {
+        trackerUserRepository.deleteById(id);
+    }
+
+    @Override
     public List<TrackerUser> getAllUsers() {
         return trackerUserRepository.findAll();
     }
