@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +37,7 @@ public class ProfileConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/registration").permitAll()
                 .antMatchers("/users").hasAnyRole("USER")
                 .anyRequest().authenticated()
                 .and()
@@ -53,7 +52,4 @@ public class ProfileConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/images/**");
     }
 
-    private BCryptPasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
 }

@@ -38,11 +38,12 @@ public class TrackerUserController {
         return trackerUserService.getAllUsers();
     }
 
-    @PostMapping("/user")
+    @PostMapping("/registration")
     public HttpStatus createUser(@RequestBody TrackerUserDto trackerUserDto) {
         trackerUserService.createTrackerUser(trackerUserDto);
         return HttpStatus.CREATED;
     }
+
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {

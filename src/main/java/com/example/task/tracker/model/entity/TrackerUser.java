@@ -1,18 +1,20 @@
 package com.example.task.tracker.model.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "tracker_user")
 public class TrackerUser {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @Column(unique = true, nullable = false)
     private String username;
     private String firstName;
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +29,13 @@ public class TrackerUser {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public TrackerUser(String username, String firstName, String lastName, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public String getUsername() {
