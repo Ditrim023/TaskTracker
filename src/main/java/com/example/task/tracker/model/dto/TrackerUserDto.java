@@ -1,27 +1,27 @@
-package com.example.task.tracker.model;
+package com.example.task.tracker.model.dto;
 
-public class TrackerUser {
-    private Long userId;
+public class TrackerUserDto {
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
 
-    public TrackerUser() {
+    public TrackerUserDto() {
     }
 
-    public TrackerUser(Long userId, String firstName, String lastName, String email) {
-        this.userId = userId;
+    public TrackerUserDto(String username, String firstName, String lastName, String email) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
