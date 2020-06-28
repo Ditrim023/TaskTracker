@@ -19,6 +19,7 @@ public class DataLoader implements ApplicationRunner {
 
     private final TrackerRole admin = new TrackerRole("ROLE_ADMIN");
     private final TrackerRole user = new TrackerRole("ROLE_USER");
+    private static final String PASS = "123456";
     private final List<TrackerUser> userList = new ArrayList<>();
 
 
@@ -39,10 +40,22 @@ public class DataLoader implements ApplicationRunner {
     }
 
     void insertUser() {
-        TrackerUser user0 = new TrackerUser("user1", "Arnold", "Schwarzenegger", "arnold@gmail.com", new BCryptPasswordEncoder(10).encode("123456"));
-        user0.setRole(trackerRoleRepository.getOne(2L));
-        trackerUserRepository.save(user0);
-//        trackerUserRepository.save(new TrackerUser("admin2", "new2", "test2", "example2@gmail.com", "123456"));
-//        trackerUserRepository.saveA(userList);
+        TrackerRole userRole = trackerRoleRepository.getOne(2L);
+        TrackerUser user1 = new TrackerUser("user1", "Arnold", "Schwarzenegger", "arnold@gmail.com", new BCryptPasswordEncoder(10).encode(PASS));
+        user1.setRole(userRole);
+        userList.add(user1);
+        TrackerUser user2 = new TrackerUser("user2", "Sylvester", "Stallone", "sylvester@gmail.com", new BCryptPasswordEncoder(10).encode(PASS));
+        user2.setRole(userRole);
+        userList.add(user2);
+        TrackerUser user3 = new TrackerUser("user3", "Jason", "Statham", "jason@gmail.com", new BCryptPasswordEncoder(10).encode(PASS));
+        user3.setRole(userRole);
+        userList.add(user3);
+        TrackerUser user4 = new TrackerUser("user4", "Dolph", "Lundgren", "dolph@gmail.com", new BCryptPasswordEncoder(10).encode(PASS));
+        user4.setRole(userRole);
+        userList.add(user4);
+        TrackerUser user5 = new TrackerUser("user5", "Jackie", "Chan", "jackie@gmail.com", new BCryptPasswordEncoder(10).encode(PASS));
+        user5.setRole(userRole);
+        userList.add(user5);
+        trackerUserRepository.saveAll(userList);
     }
 }
