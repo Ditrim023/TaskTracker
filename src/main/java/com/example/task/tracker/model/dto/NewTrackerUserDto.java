@@ -1,31 +1,18 @@
 package com.example.task.tracker.model.dto;
 
-public class TrackerUserDto {
-    private Long id;
+public class NewTrackerUserDto {
     private String username;
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private String role;
 
-    public TrackerUserDto() {
-    }
-
-    public TrackerUserDto(Long id, String username, String firstName, String lastName, String email, String role) {
-        this.id = id;
+    public NewTrackerUserDto(String username, String firstName, String lastName, String email) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -58,6 +45,14 @@ public class TrackerUserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {

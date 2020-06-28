@@ -1,6 +1,7 @@
 package com.example.task.tracker.controller;
 
 import com.example.task.tracker.model.dto.AuthenticationRequestDto;
+import com.example.task.tracker.model.dto.NewTrackerUserDto;
 import com.example.task.tracker.model.dto.TrackerUserDto;
 import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.security.jwt.JwtTokenProvider;
@@ -34,12 +35,12 @@ public class TrackerUserController {
     }
 
     @GetMapping("/users")
-    public List<TrackerUser> getAllUsers() {
-        return trackerUserService.getAllUsers();
+    public List<TrackerUserDto> displayAllUsers() {
+        return trackerUserService.getAllDtoUser();
     }
 
     @PostMapping("/registration")
-    public HttpStatus createUser(@RequestBody TrackerUserDto trackerUserDto) {
+    public HttpStatus createUser(@RequestBody NewTrackerUserDto trackerUserDto) {
         trackerUserService.createTrackerUser(trackerUserDto);
         return HttpStatus.CREATED;
     }

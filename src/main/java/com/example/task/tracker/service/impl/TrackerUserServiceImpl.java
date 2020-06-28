@@ -1,19 +1,23 @@
 package com.example.task.tracker.service.impl;
 
+import com.example.task.tracker.model.dto.NewTrackerUserDto;
 import com.example.task.tracker.model.dto.TrackerUserDto;
 import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerRoleRepository;
 import com.example.task.tracker.repository.TrackerUserRepository;
 import com.example.task.tracker.service.TrackerUserService;
+import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TrackerUserServiceImpl implements TrackerUserService {
     private TrackerUserRepository trackerUserRepository;
     private TrackerRoleRepository trackerRoleRepository;
+    private TrackerConverter trackerConverter = new TrackerConverter();
 
     public TrackerUserServiceImpl(TrackerUserRepository trackerUserRepository, TrackerRoleRepository trackerRoleRepository) {
         this.trackerUserRepository = trackerUserRepository;
@@ -21,7 +25,7 @@ public class TrackerUserServiceImpl implements TrackerUserService {
     }
 
     @Override
-    public void createTrackerUser(TrackerUserDto trackerUserDto) {
+    public void createTrackerUser(NewTrackerUserDto trackerUserDto) {
         TrackerUser newTrackerUser = new TrackerUser(trackerUserDto.getUsername(), trackerUserDto.getFirstName(), trackerUserDto.getLastName(), trackerUserDto.getEmail());
         newTrackerUser.setRole(trackerRoleRepository.getOne(2L));
         newTrackerUser.setPassword(new BCryptPasswordEncoder(10).encode(trackerUserDto.getPassword()));
@@ -34,7 +38,16 @@ public class TrackerUserServiceImpl implements TrackerUserService {
     }
 
     @Override
+    public List<TrackerUserDto> getAllDtoUser() {
+        List<TrackerUser> userList = getAllUsers();
+        return userList.stream().map(trackerConverter::convertEntityToDto).collect(Collectors.toList());
+    }
+
+
+    @Override
     public TrackerUser findByUsername(String username) {
         return trackerUserRepository.findTrackerUserByUsername(username);
     }
+
+
 }
