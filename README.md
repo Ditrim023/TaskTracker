@@ -1,9 +1,10 @@
   ##is absent
-- no user pagination
-- no filter by new/old users
-- no swagger
+- user pagination
+- tests
+- swagger
 
 live version https://task-tracker-test.herokuapp.com
+- DB automatically fill after launch
 
 - model for register new user
 ```
