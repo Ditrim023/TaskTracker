@@ -2,8 +2,6 @@ package com.example.task.tracker.model.dto;
 
 import com.example.task.tracker.model.entity.Status;
 
-import javax.persistence.Lob;
-
 public class TrackerTaskDto {
     private String title;
     private String description;

@@ -1,7 +1,6 @@
 package com.example.task.tracker.controller;
 
 import com.example.task.tracker.model.dto.TrackerTaskDto;
-import com.example.task.tracker.model.entity.Status;
 import com.example.task.tracker.service.TrackerTaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +34,10 @@ public class TrackerTaskController {
 
     @PatchMapping("/task/{id}/status/{status}")
     public ResponseEntity updateTask(@PathVariable Long id, @PathVariable String status) {
-        if (Arrays.asList("DONE", "IN_PROGRESS", "VIEW").contains(status)){
+        if (Arrays.asList("DONE", "IN_PROGRESS", "VIEW").contains(status)) {
             trackerTaskService.updateTrackerTaskStatus(id, status);
             return ResponseEntity.ok("Status updated");
-        }else{
+        } else {
             return ResponseEntity.ok("Status invalid");
         }
 
