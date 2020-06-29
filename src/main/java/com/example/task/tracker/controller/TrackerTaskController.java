@@ -44,6 +44,17 @@ public class TrackerTaskController {
         return ResponseEntity.ok("Task updated");
     }
 
+    @PatchMapping("/task/{id}/user/{username}")
+    public ResponseEntity updateUserForTask(@PathVariable Long id, @PathVariable String username) {
+        try {
+            trackerTaskService.updateUserForTask(id, username);
+            return ResponseEntity.ok("User for task updated");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.ok("User does not exist");
+        }
+
+    }
+
     @PatchMapping("/task/{id}/status/{status}")
     public ResponseEntity updateTask(@PathVariable Long id, @PathVariable String status) {
         if (Arrays.asList("DONE", "IN_PROGRESS", "VIEW").contains(status)) {
@@ -61,8 +72,4 @@ public class TrackerTaskController {
         return ResponseEntity.ok("Status deleted");
     }
 
-    @PatchMapping("/task/{id}/username/{username}")
-    public ResponseEntity updateUserForTask(@PathVariable Long id, @PathVariable String username) {
-        return ResponseEntity.ok("Status updated");
-    }
 }

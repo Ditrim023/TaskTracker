@@ -12,6 +12,8 @@ public interface TrackerTaskService {
 
     void updateTrackerTask(Long id, TrackerTaskDto trackerTaskDto);
 
+    void updateUserForTask(Long id,String username);
+
     void updateTrackerTaskStatus(Long id, String status);
 
     void deleteTrackerTask(Long id);

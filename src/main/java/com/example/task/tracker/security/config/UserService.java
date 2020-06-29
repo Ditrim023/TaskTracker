@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -23,13 +24,13 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username){
-        TrackerUser user = trackerUserService.findByUsername(username);
+        Optional<TrackerUser> user = trackerUserService.findByUsername(username);
 
-        if (user == null) {
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("User with username: " + username + " not found");
         }
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(user.getRole().getName()));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
+        roles.add(new SimpleGrantedAuthority(user.get().getRole().getName()));
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), roles);
     }
 }

@@ -7,9 +7,11 @@ import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerTaskRepository;
 import com.example.task.tracker.repository.TrackerUserRepository;
 import com.example.task.tracker.service.TrackerTaskService;
+import com.example.task.tracker.service.TrackerUserService;
 import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,12 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class TrackerTaskServiceImpl implements TrackerTaskService {
     private final TrackerTaskRepository trackerTaskRepository;
-    private final TrackerUserRepository trackerUserRepository;
+    private final TrackerUserService trackerUserService;
     private TrackerConverter converter = new TrackerConverter();
 
-    public TrackerTaskServiceImpl(TrackerTaskRepository trackerTaskRepository, TrackerUserRepository trackerUserRepository) {
+    public TrackerTaskServiceImpl(TrackerTaskRepository trackerTaskRepository, TrackerUserService trackerUserService) {
         this.trackerTaskRepository = trackerTaskRepository;
-        this.trackerUserRepository = trackerUserRepository;
+        this.trackerUserService = trackerUserService;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
         newTask.setTitle(trackerTaskDto.getTitle());
         newTask.setDescription(trackerTaskDto.getDescription());
         newTask.setStatus(trackerTaskDto.getStatus());
-        Optional<TrackerUser> userForTask = trackerUserRepository.findById(trackerTaskDto.getUserId());
+        Optional<TrackerUser> userForTask = trackerUserService.findById(trackerTaskDto.getUserId());
         userForTask.ifPresent(newTask::setUser);
         trackerTaskRepository.save(newTask);
     }
@@ -47,8 +49,21 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
         task.setTitle(trackerTaskDto.getTitle());
         task.setDescription(trackerTaskDto.getDescription());
         task.setStatus(trackerTaskDto.getStatus());
-        Optional<TrackerUser> userForTask = trackerUserRepository.findById(trackerTaskDto.getUserId());
+        Optional<TrackerUser> userForTask = trackerUserService.findById(trackerTaskDto.getUserId());
         userForTask.ifPresent(task::setUser);
+        trackerTaskRepository.save(task);
+    }
+
+    @Override
+    public void updateUserForTask(Long id, String username) {
+        Optional<TrackerUser> user = trackerUserService.findByUsername(username);
+        TrackerTask task = trackerTaskRepository.getOne(id);
+        if (user.isPresent()){
+            task.setUser(user.get());
+        }else{
+            throw new EntityNotFoundException();
+        }
+
         trackerTaskRepository.save(task);
     }
 

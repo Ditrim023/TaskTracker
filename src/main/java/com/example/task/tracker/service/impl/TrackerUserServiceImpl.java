@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,11 +60,14 @@ public class TrackerUserServiceImpl implements TrackerUserService {
         return userList.stream().map(trackerConverter::convertUserEntityToDto).collect(Collectors.toList());
     }
 
-
     @Override
-    public TrackerUser findByUsername(String username) {
-        return trackerUserRepository.findTrackerUserByUsername(username);
+    public Optional<TrackerUser> findByUsername(String username) {
+        return Optional.ofNullable(trackerUserRepository.findTrackerUserByUsername(username));
     }
 
+    @Override
+    public Optional<TrackerUser> findById(Long id) {
+        return trackerUserRepository.findById(id);
+    }
 
 }

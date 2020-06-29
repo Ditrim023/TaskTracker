@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class TrackerUserController {
@@ -50,33 +51,34 @@ public class TrackerUserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity deleteUserById(@PathVariable Long id){
+    public ResponseEntity deleteUserById(@PathVariable Long id) {
         trackerUserService.deleteTrackerUser(id);
         return ResponseEntity.ok("User deleted");
     }
 
     @GetMapping("/user/{username}")
     public TrackerUserDto getUser(@PathVariable String username) {
-        try {
-            TrackerUser user = trackerUserService.findByUsername(username);
-            return trackerConverter.convertUserEntityToDto(user);
-        } catch (NullPointerException e) {
+        Optional<TrackerUser> user = trackerUserService.findByUsername(username);
+        if (!user.isPresent()) {
             return new TrackerUserDto();
+        } else {
+            return trackerConverter.convertUserEntityToDto(user.get());
         }
     }
+
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            TrackerUser user = trackerUserService.findByUsername(username);
+            Optional<TrackerUser> user = trackerUserService.findByUsername(username);
 
-            if (user == null) {
+            if (!user.isPresent()) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username, user.getRole());
+            String token = jwtTokenProvider.createToken(username, user.get().getRole());
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
