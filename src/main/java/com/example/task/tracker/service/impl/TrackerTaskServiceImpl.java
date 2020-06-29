@@ -5,7 +5,6 @@ import com.example.task.tracker.model.entity.Status;
 import com.example.task.tracker.model.entity.TrackerTask;
 import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerTaskRepository;
-import com.example.task.tracker.repository.TrackerUserRepository;
 import com.example.task.tracker.service.TrackerTaskService;
 import com.example.task.tracker.service.TrackerUserService;
 import com.example.task.tracker.utils.TrackerConverter;
@@ -58,9 +57,9 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
     public void updateUserForTask(Long id, String username) {
         Optional<TrackerUser> user = trackerUserService.findByUsername(username);
         TrackerTask task = trackerTaskRepository.getOne(id);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             task.setUser(user.get());
-        }else{
+        } else {
             throw new EntityNotFoundException();
         }
 
@@ -87,6 +86,12 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
     @Override
     public List<TrackerTaskDto> getAllDtoTask() {
         List<TrackerTask> taskList = getAllTasks();
+        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TrackerTaskDto> findAllByStatus(Status status) {
+        List<TrackerTask> taskList = trackerTaskRepository.findByStatus(status);
         return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
     }
 }

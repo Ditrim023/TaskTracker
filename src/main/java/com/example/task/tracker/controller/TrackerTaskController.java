@@ -1,6 +1,7 @@
 package com.example.task.tracker.controller;
 
 import com.example.task.tracker.model.dto.TrackerTaskDto;
+import com.example.task.tracker.model.entity.Status;
 import com.example.task.tracker.service.TrackerTaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,11 @@ public class TrackerTaskController {
             return new TrackerTaskDto();
         }
 
+    }
+
+    @GetMapping("/tasks/status/{status}")
+    public List<TrackerTaskDto> findTasksByStatus(@PathVariable String status) {
+        return trackerTaskService.findAllByStatus(Status.valueOf(status));
     }
 
     @GetMapping("/tasks")
