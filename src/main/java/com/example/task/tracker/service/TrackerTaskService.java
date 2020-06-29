@@ -1,6 +1,9 @@
 package com.example.task.tracker.service;
 
 import com.example.task.tracker.model.dto.TrackerTaskDto;
+import com.example.task.tracker.model.entity.TrackerTask;
+
+import java.util.List;
 
 public interface TrackerTaskService {
     TrackerTaskDto findOneById(Long id);
@@ -12,4 +15,8 @@ public interface TrackerTaskService {
     void updateTrackerTaskStatus(Long id, String status);
 
     void deleteTrackerTask(Long id);
+
+    List<TrackerTask> getAllTasks();
+
+    List<TrackerTaskDto> getAllDtoTask();
 }

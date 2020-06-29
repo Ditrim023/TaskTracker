@@ -10,7 +10,9 @@ import com.example.task.tracker.service.TrackerTaskService;
 import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TrackerTaskServiceImpl implements TrackerTaskService {
@@ -60,5 +62,16 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
     @Override
     public void deleteTrackerTask(Long id) {
         trackerTaskRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TrackerTask> getAllTasks() {
+        return trackerTaskRepository.findAll();
+    }
+
+    @Override
+    public List<TrackerTaskDto> getAllDtoTask() {
+        List<TrackerTask> taskList = getAllTasks();
+        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
     }
 }

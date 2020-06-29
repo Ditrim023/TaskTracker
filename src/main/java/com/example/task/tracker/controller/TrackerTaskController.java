@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class TrackerTaskController {
@@ -24,6 +25,11 @@ public class TrackerTaskController {
             return new TrackerTaskDto();
         }
 
+    }
+
+    @GetMapping("/tasks")
+    public List<TrackerTaskDto> displayAllTask(){
+        return trackerTaskService.getAllDtoTask();
     }
 
     @PostMapping("/task")

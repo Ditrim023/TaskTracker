@@ -38,7 +38,7 @@ public class ProfileConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").permitAll()
-                .antMatchers("/user/**","/users/**","/task/**").permitAll()
+                .antMatchers("/user/**","/users/**","/task/**","/tasks").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
@@ -51,5 +51,4 @@ public class ProfileConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/css/**", "/images/**");
     }
-
 }

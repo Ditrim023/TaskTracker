@@ -70,16 +70,16 @@ public class DataLoader implements ApplicationRunner {
         task.setUser(trackerUserRepository.getOne(1L));
         taskList.add(task);
         TrackerTask task2 = new TrackerTask("TestTwo","Test task for user", Status.DONE);
-        task.setUser(trackerUserRepository.getOne(1L));
+        task2.setUser(trackerUserRepository.getOne(1L));
         taskList.add(task2);
         TrackerTask task3 = new TrackerTask("Test3","Test tassdfsk for uszxczxcer", Status.DONE);
-        task.setUser(trackerUserRepository.getOne(3L));
+        task3.setUser(trackerUserRepository.getOne(3L));
         taskList.add(task3);
         TrackerTask task4 = new TrackerTask("TestFour","Test tsvsdvwsask for user", Status.VIEW);
-        task.setUser(trackerUserRepository.getOne(1L));
+        task4.setUser(trackerUserRepository.getOne(1L));
         taskList.add(task4);
         TrackerTask task5 = new TrackerTask("Test5","Test task fsdfsdor user", Status.VIEW);
-        task.setUser(trackerUserRepository.getOne(5L));
+        task5.setUser(trackerUserRepository.getOne(5L));
         taskList.add(task5);
         trackerTaskRepository.saveAll(taskList);
     }
