@@ -24,6 +24,7 @@ public class TrackerConverter {
 
     public TrackerTaskDto convertTaskEntityToDto(TrackerTask trackerTask){
         TrackerTaskDto taskDto = new TrackerTaskDto();
+        taskDto.setId(trackerTask.getId());
         taskDto.setTitle(trackerTask.getTitle());
         taskDto.setDescription(trackerTask.getDescription());
         taskDto.setStatus(trackerTask.getStatus());

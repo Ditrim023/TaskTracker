@@ -3,6 +3,7 @@ package com.example.task.tracker.model.dto;
 import com.example.task.tracker.model.entity.Status;
 
 public class TrackerTaskDto {
+    private Long id;
     private String title;
     private String description;
     private Status status;
@@ -16,6 +17,14 @@ public class TrackerTaskDto {
         this.description = description;
         this.status = status;
         this.userId = userId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

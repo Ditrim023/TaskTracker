@@ -19,16 +19,16 @@ public class TrackerTaskController {
 
     @GetMapping("/task/{id}")
     public TrackerTaskDto getTask(@PathVariable Long id) {
-        try{
+        try {
             return trackerTaskService.findOneById(id);
-        }catch (EntityNotFoundException ex){
+        } catch (EntityNotFoundException ex) {
             return new TrackerTaskDto();
         }
 
     }
 
     @GetMapping("/tasks")
-    public List<TrackerTaskDto> displayAllTask(){
+    public List<TrackerTaskDto> displayAllTask() {
         return trackerTaskService.getAllDtoTask();
     }
 
@@ -56,8 +56,13 @@ public class TrackerTaskController {
     }
 
     @DeleteMapping("/task/{id}")
-    public ResponseEntity deleteTask(@PathVariable Long id){
+    public ResponseEntity deleteTask(@PathVariable Long id) {
         trackerTaskService.deleteTrackerTask(id);
         return ResponseEntity.ok("Status deleted");
+    }
+
+    @PatchMapping("/task/{id}/username/{username}")
+    public ResponseEntity updateUserForTask(@PathVariable Long id, @PathVariable String username) {
+        return ResponseEntity.ok("Status updated");
     }
 }
