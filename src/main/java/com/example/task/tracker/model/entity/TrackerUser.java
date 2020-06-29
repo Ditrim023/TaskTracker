@@ -1,6 +1,10 @@
 package com.example.task.tracker.model.entity;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,6 +21,8 @@ public class TrackerUser {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private Long dateCreate = System.currentTimeMillis();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TrackerRole role;
@@ -103,5 +109,13 @@ public class TrackerUser {
 
     public void setTaskList(List<TrackerTask> taskList) {
         this.taskList = taskList;
+    }
+
+    public Long getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Long dateCreate) {
+        this.dateCreate = dateCreate;
     }
 }

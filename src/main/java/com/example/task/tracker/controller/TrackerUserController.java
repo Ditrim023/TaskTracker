@@ -38,6 +38,11 @@ public class TrackerUserController {
         return trackerUserService.getAllDtoUser();
     }
 
+    @GetMapping("/users/date")
+    public List<TrackerUserDto> getAllOrderedByDate(){
+        return trackerUserService.findAllOrderByDateCreatedDesc();
+    }
+
     @PostMapping("/registration")
     public ResponseEntity createUser(@RequestBody NewTrackerUserDto trackerUserDto) {
         trackerUserService.createTrackerUser(trackerUserDto);

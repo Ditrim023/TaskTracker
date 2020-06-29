@@ -61,6 +61,12 @@ public class TrackerUserServiceImpl implements TrackerUserService {
     }
 
     @Override
+    public List<TrackerUserDto> findAllOrderByDateCreatedDesc() {
+        List<TrackerUser> userList = trackerUserRepository.findAllByOrderByDateCreateDesc();
+        return userList.stream().map(trackerConverter::convertUserEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<TrackerUser> findByUsername(String username) {
         return Optional.ofNullable(trackerUserRepository.findTrackerUserByUsername(username));
     }
