@@ -1,10 +1,6 @@
 package com.example.task.tracker.model.entity;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -111,11 +107,4 @@ public class TrackerUser {
         this.taskList = taskList;
     }
 
-    public Long getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(Long dateCreate) {
-        this.dateCreate = dateCreate;
-    }
 }
