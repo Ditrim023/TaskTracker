@@ -5,6 +5,7 @@ import com.example.task.tracker.service.TrackerTaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 
 @RestController
@@ -17,7 +18,12 @@ public class TrackerTaskController {
 
     @GetMapping("/task/{id}")
     public TrackerTaskDto getTask(@PathVariable Long id) {
-        return trackerTaskService.findOneById(id);
+        try{
+            return trackerTaskService.findOneById(id);
+        }catch (EntityNotFoundException ex){
+            return new TrackerTaskDto();
+        }
+
     }
 
     @PostMapping("/task")
@@ -41,5 +47,11 @@ public class TrackerTaskController {
             return ResponseEntity.ok("Status invalid");
         }
 
+    }
+
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity deleteTask(@PathVariable Long id){
+        trackerTaskService.deleteTrackerTask(id);
+        return ResponseEntity.ok("Status deleted");
     }
 }

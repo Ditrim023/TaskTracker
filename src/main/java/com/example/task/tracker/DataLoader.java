@@ -25,6 +25,7 @@ public class DataLoader implements ApplicationRunner {
     private final TrackerRole user = new TrackerRole("ROLE_USER");
     private static final String PASS = "123456";
     private final List<TrackerUser> userList = new ArrayList<>();
+    private final List<TrackerTask> taskList = new ArrayList<>();
 
     public DataLoader(TrackerUserRepository trackerUserRepository, TrackerRoleRepository trackerRoleRepository, TrackerTaskRepository trackerTaskRepository) {
         this.trackerUserRepository = trackerUserRepository;
@@ -43,8 +44,6 @@ public class DataLoader implements ApplicationRunner {
         trackerRoleRepository.save(admin);
         trackerRoleRepository.save(user);
     }
-
-
 
     void insertUser() {
         TrackerRole userRole = trackerRoleRepository.getOne(2L);
@@ -67,8 +66,21 @@ public class DataLoader implements ApplicationRunner {
     }
 
     void insertTask(){
-        TrackerTask task = new TrackerTask("Test","Test task for user", Status.IN_PROGRESS);
+        TrackerTask task = new TrackerTask("Test","Test task for user1", Status.IN_PROGRESS);
         task.setUser(trackerUserRepository.getOne(1L));
-        trackerTaskRepository.save(task);
+        taskList.add(task);
+        TrackerTask task2 = new TrackerTask("TestTwo","Test task for user", Status.DONE);
+        task.setUser(trackerUserRepository.getOne(1L));
+        taskList.add(task2);
+        TrackerTask task3 = new TrackerTask("Test3","Test tassdfsk for uszxczxcer", Status.DONE);
+        task.setUser(trackerUserRepository.getOne(3L));
+        taskList.add(task3);
+        TrackerTask task4 = new TrackerTask("TestFour","Test tsvsdvwsask for user", Status.VIEW);
+        task.setUser(trackerUserRepository.getOne(1L));
+        taskList.add(task4);
+        TrackerTask task5 = new TrackerTask("Test5","Test task fsdfsdor user", Status.VIEW);
+        task.setUser(trackerUserRepository.getOne(5L));
+        taskList.add(task5);
+        trackerTaskRepository.saveAll(taskList);
     }
 }

@@ -10,4 +10,6 @@ public interface TrackerTaskService {
     void updateTrackerTask(Long id, TrackerTaskDto trackerTaskDto);
 
     void updateTrackerTaskStatus(Long id, String status);
+
+    void deleteTrackerTask(Long id);
 }

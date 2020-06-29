@@ -56,4 +56,9 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
         task.setStatus(Status.valueOf(status));
         trackerTaskRepository.save(task);
     }
+
+    @Override
+    public void deleteTrackerTask(Long id) {
+        trackerTaskRepository.deleteById(id);
+    }
 }
