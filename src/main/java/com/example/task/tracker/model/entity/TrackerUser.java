@@ -1,6 +1,7 @@
 package com.example.task.tracker.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tracker_user")
@@ -19,6 +20,8 @@ public class TrackerUser {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TrackerRole role;
+    @OneToMany(mappedBy = "user")
+    private List<TrackerTask> taskList;
 
     public TrackerUser() {
     }
@@ -94,14 +97,11 @@ public class TrackerUser {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "TrackerUser{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public List<TrackerTask> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<TrackerTask> taskList) {
+        this.taskList = taskList;
     }
 }

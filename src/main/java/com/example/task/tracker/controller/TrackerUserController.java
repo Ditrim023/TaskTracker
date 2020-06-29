@@ -59,7 +59,7 @@ public class TrackerUserController {
     public TrackerUserDto getUser(@PathVariable String username) {
         try {
             TrackerUser user = trackerUserService.findByUsername(username);
-            return trackerConverter.convertEntityToDto(user);
+            return trackerConverter.convertUserEntityToDto(user);
         } catch (NullPointerException e) {
             return new TrackerUserDto();
         }

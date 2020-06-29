@@ -56,7 +56,7 @@ public class TrackerUserServiceImpl implements TrackerUserService {
     @Override
     public List<TrackerUserDto> getAllDtoUser() {
         List<TrackerUser> userList = getAllUsers();
-        return userList.stream().map(trackerConverter::convertEntityToDto).collect(Collectors.toList());
+        return userList.stream().map(trackerConverter::convertUserEntityToDto).collect(Collectors.toList());
     }
 
 

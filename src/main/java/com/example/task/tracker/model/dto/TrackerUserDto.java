@@ -7,6 +7,8 @@ public class TrackerUserDto {
     private String lastName;
     private String email;
     private String role;
+    private int countTask;
+
 
     public TrackerUserDto() {
     }
@@ -66,5 +68,13 @@ public class TrackerUserDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getCountTask() {
+        return countTask;
+    }
+
+    public void setCountTask(int countTask) {
+        this.countTask = countTask;
     }
 }

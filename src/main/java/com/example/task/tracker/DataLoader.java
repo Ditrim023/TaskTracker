@@ -1,8 +1,11 @@
 package com.example.task.tracker;
 
+import com.example.task.tracker.model.entity.Status;
 import com.example.task.tracker.model.entity.TrackerRole;
+import com.example.task.tracker.model.entity.TrackerTask;
 import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerRoleRepository;
+import com.example.task.tracker.repository.TrackerTaskRepository;
 import com.example.task.tracker.repository.TrackerUserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -16,28 +19,32 @@ import java.util.List;
 public class DataLoader implements ApplicationRunner {
     private final TrackerUserRepository trackerUserRepository;
     private final TrackerRoleRepository trackerRoleRepository;
+    private final TrackerTaskRepository trackerTaskRepository;
 
     private final TrackerRole admin = new TrackerRole("ROLE_ADMIN");
     private final TrackerRole user = new TrackerRole("ROLE_USER");
     private static final String PASS = "123456";
     private final List<TrackerUser> userList = new ArrayList<>();
 
-
-    public DataLoader(TrackerUserRepository trackerUserRepository, TrackerRoleRepository trackerRoleRepository) {
+    public DataLoader(TrackerUserRepository trackerUserRepository, TrackerRoleRepository trackerRoleRepository, TrackerTaskRepository trackerTaskRepository) {
         this.trackerUserRepository = trackerUserRepository;
         this.trackerRoleRepository = trackerRoleRepository;
+        this.trackerTaskRepository = trackerTaskRepository;
     }
 
     @Override
     public void run(ApplicationArguments args){
         insertRoles();
         insertUser();
+        insertTask();
     }
 
     void insertRoles(){
         trackerRoleRepository.save(admin);
         trackerRoleRepository.save(user);
     }
+
+
 
     void insertUser() {
         TrackerRole userRole = trackerRoleRepository.getOne(2L);
@@ -57,5 +64,11 @@ public class DataLoader implements ApplicationRunner {
         user5.setRole(userRole);
         userList.add(user5);
         trackerUserRepository.saveAll(userList);
+    }
+
+    void insertTask(){
+        TrackerTask task = new TrackerTask("Test","Test task for user", Status.IN_PROGRESS);
+        task.setUser(trackerUserRepository.getOne(1L));
+        trackerTaskRepository.save(task);
     }
 }
