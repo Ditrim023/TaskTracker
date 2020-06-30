@@ -12,8 +12,7 @@ public interface TrackerUserService {
     void updateTrackerUser(Long id,NewTrackerUserDto trackerUserDto);
     void deleteTrackerUser(Long id);
     List<TrackerUser> getAllUsers();
-    List<TrackerUserDto> getAllDtoUser();
-    List<TrackerUserDto> findAllOrderByDateCreatedDesc();
+    List<TrackerUser> findAllOrderByDateCreatedDesc();
     Optional<TrackerUser> findByUsername(String username);
     Optional<TrackerUser> findById(Long id);
 }

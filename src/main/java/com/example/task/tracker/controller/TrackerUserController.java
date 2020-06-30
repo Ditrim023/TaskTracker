@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class TrackerUserController {
@@ -35,12 +36,14 @@ public class TrackerUserController {
 
     @GetMapping("/users")
     public List<TrackerUserDto> displayAllUsers() {
-        return trackerUserService.getAllDtoUser();
+        List<TrackerUser> userList = trackerUserService.getAllUsers();
+        return userList.stream().map(trackerConverter::convertUserEntityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/users/date")
     public List<TrackerUserDto> getAllOrderedByDate(){
-        return trackerUserService.findAllOrderByDateCreatedDesc();
+        List<TrackerUser> userList = trackerUserService.findAllOrderByDateCreatedDesc();
+        return userList.stream().map(trackerConverter::convertUserEntityToDto).collect(Collectors.toList());
     }
 
     @PostMapping("/registration")

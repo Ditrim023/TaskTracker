@@ -2,17 +2,21 @@ package com.example.task.tracker.controller;
 
 import com.example.task.tracker.model.dto.TrackerTaskDto;
 import com.example.task.tracker.model.entity.Status;
+import com.example.task.tracker.model.entity.TrackerTask;
 import com.example.task.tracker.service.TrackerTaskService;
+import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class TrackerTaskController {
     private final TrackerTaskService trackerTaskService;
+    private TrackerConverter converter = new TrackerConverter();
 
     public TrackerTaskController(TrackerTaskService trackerTaskService) {
         this.trackerTaskService = trackerTaskService;
@@ -21,7 +25,7 @@ public class TrackerTaskController {
     @GetMapping("/task/{id}")
     public TrackerTaskDto getTask(@PathVariable Long id) {
         try {
-            return trackerTaskService.findOneById(id);
+            return converter.convertTaskEntityToDto(trackerTaskService.findOneById(id));
         } catch (EntityNotFoundException ex) {
             return new TrackerTaskDto();
         }
@@ -30,12 +34,14 @@ public class TrackerTaskController {
 
     @GetMapping("/tasks/status/{status}")
     public List<TrackerTaskDto> findTasksByStatus(@PathVariable String status) {
-        return trackerTaskService.findAllByStatus(Status.valueOf(status));
+        List<TrackerTask> taskList = trackerTaskService.findAllByStatus(Status.valueOf(status));
+        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/tasks")
     public List<TrackerTaskDto> displayAllTask() {
-        return trackerTaskService.getAllDtoTask();
+        List<TrackerTask> taskList = trackerTaskService.getAllTasks();
+        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
     }
 
     @PostMapping("/task")

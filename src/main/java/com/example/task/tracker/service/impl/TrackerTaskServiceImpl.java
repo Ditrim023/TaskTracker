@@ -7,19 +7,17 @@ import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerTaskRepository;
 import com.example.task.tracker.service.TrackerTaskService;
 import com.example.task.tracker.service.TrackerUserService;
-import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TrackerTaskServiceImpl implements TrackerTaskService {
     private final TrackerTaskRepository trackerTaskRepository;
     private final TrackerUserService trackerUserService;
-    private TrackerConverter converter = new TrackerConverter();
+
 
     public TrackerTaskServiceImpl(TrackerTaskRepository trackerTaskRepository, TrackerUserService trackerUserService) {
         this.trackerTaskRepository = trackerTaskRepository;
@@ -27,8 +25,8 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
     }
 
     @Override
-    public TrackerTaskDto findOneById(Long id) {
-        return converter.convertTaskEntityToDto(trackerTaskRepository.getOne(id));
+    public TrackerTask findOneById(Long id) {
+        return trackerTaskRepository.getOne(id);
     }
 
     @Override
@@ -83,15 +81,9 @@ public class TrackerTaskServiceImpl implements TrackerTaskService {
         return trackerTaskRepository.findAll();
     }
 
-    @Override
-    public List<TrackerTaskDto> getAllDtoTask() {
-        List<TrackerTask> taskList = getAllTasks();
-        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
-    }
 
     @Override
-    public List<TrackerTaskDto> findAllByStatus(Status status) {
-        List<TrackerTask> taskList = trackerTaskRepository.findByStatus(status);
-        return taskList.stream().map(converter::convertTaskEntityToDto).collect(Collectors.toList());
+    public List<TrackerTask> findAllByStatus(Status status) {
+        return trackerTaskRepository.findByStatus(status);
     }
 }

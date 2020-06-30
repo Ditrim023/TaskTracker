@@ -7,7 +7,7 @@ import com.example.task.tracker.model.entity.TrackerTask;
 import java.util.List;
 
 public interface TrackerTaskService {
-    TrackerTaskDto findOneById(Long id);
+    TrackerTask findOneById(Long id);
 
     void createTrackerTask(TrackerTaskDto trackerTaskDto);
 
@@ -21,7 +21,5 @@ public interface TrackerTaskService {
 
     List<TrackerTask> getAllTasks();
 
-    List<TrackerTaskDto> getAllDtoTask();
-
-    List<TrackerTaskDto> findAllByStatus(Status status);
+    List<TrackerTask> findAllByStatus(Status status);
 }
