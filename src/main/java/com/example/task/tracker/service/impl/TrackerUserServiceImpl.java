@@ -5,7 +5,6 @@ import com.example.task.tracker.model.entity.TrackerUser;
 import com.example.task.tracker.repository.TrackerRoleRepository;
 import com.example.task.tracker.repository.TrackerUserRepository;
 import com.example.task.tracker.service.TrackerUserService;
-import com.example.task.tracker.utils.TrackerConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
